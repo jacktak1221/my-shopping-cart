@@ -46,7 +46,7 @@ class ProductCard extends Component {
                             </IconButton>
                         }
                         title={this.props.author}
-                        subheader={`Width:` + this.props.width + ` Height: ` + this.props.height}
+                        subheader={`Width:` + this.props.width + `px Height:` + this.props.height + `px`}
                     />
                     <CardMedia
                         className={classes.media}

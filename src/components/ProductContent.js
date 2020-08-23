@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import imageData from "../imageData";
 import ProductCard from "./ProductCard";
 import {Grid , Paper} from "@material-ui/core"
 import {withStyles} from "@material-ui/core/styles";
@@ -26,7 +25,7 @@ class ProductContent extends Component {
             <div>
                 <Grid container>
                     {
-                        imageData.map(image => {
+                        this.props.dataList.map(image => {
                             return (
                                 <Grid>
                                     <Paper className={classes.control}
@@ -35,7 +34,7 @@ class ProductContent extends Component {
                                             id={image.id}
                                             author={image.author}
                                             width={image.width}
-                                            height={image.id}
+                                            height={image.height}
                                             url={image.url}
                                             downloadUrl={image.download_url}
                                         />
