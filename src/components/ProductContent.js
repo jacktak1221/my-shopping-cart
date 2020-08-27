@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import ProductCard from "./ProductCard";
-import {Grid , Paper} from "@material-ui/core"
+import {Grid, Paper} from "@material-ui/core"
 import {withStyles} from "@material-ui/core/styles";
-
 
 const useStyles = (theme) => ({
     root: {
@@ -13,7 +12,7 @@ const useStyles = (theme) => ({
         width: 100
     },
     control: {
-        padding: theme.spacing(4),
+        padding: theme.spacing(2),
     }
 });
 
@@ -21,24 +20,18 @@ const useStyles = (theme) => ({
 class ProductContent extends Component {
     render() {
         const {classes} = this.props;
+
         return (
             <div>
-                <Grid container>
+                <Grid item container spacing={2}>
                     {
                         this.props.dataList.map(image => {
                             return (
-                                <Grid>
-                                    <Paper className={classes.control}
-                                    square boarder={0}>
-                                        <ProductCard
-                                            id={image.id}
-                                            author={image.author}
-                                            width={image.width}
-                                            height={image.height}
-                                            url={image.url}
-                                            downloadUrl={image.download_url}
-                                        />
-                                    </Paper>
+                                <Grid item sm={12} md={4}>
+                                    <ProductCard
+                                        image={image}
+                                        addToCart={this.props.addToCart}
+                                    />
                                 </Grid>
                             );
                         })
