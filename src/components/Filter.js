@@ -17,10 +17,11 @@ class Filter extends Component {
             <div>
                 <Grid container
                       direction="row"
-                      justify="center"
-                      alignItems="center">
+                      alignItems="center"
+                      spacing={2}
+                >
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={5}>
                         <Autocomplete
                             multiple
                             id="free-solo-2-demo"
@@ -41,7 +42,7 @@ class Filter extends Component {
                         />
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={12} md={2}>
                         <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
@@ -54,13 +55,13 @@ class Filter extends Component {
                         </Select>
                     </Grid>
 
-                    <Grid item xs={2}>
+                    <Grid item xs={6} md={2}>
                         <Typography>
                             Filter Result: {this.props.filterDataSize}
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={1}>
+                    <Grid item xs={6} md={1}>
                         <Button color={"primary"} variant={"outlined"}
                                 onClick={this.props.resetFilter}>
                             Reset

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
+import {Divider, Grid, Button, Container} from "@material-ui/core";
 import './App.css';
 import DenseAppBar from "./components/DenseAppBar";
 import ProductContent from "./components/ProductContent";
 import Filter from "./components/Filter";
-import Container from "@material-ui/core/Container";
 import imageData from "./data/imageData";
 
 class App extends Component {
@@ -14,7 +14,9 @@ class App extends Component {
         this.state = {
             filteredImagesData: imageData,
             size: imageData.length,
-            sort: 'asc'
+            sort: 'asc',
+            cartItems: [],
+            cartOpen: false
         }
     }
 
@@ -24,8 +26,6 @@ class App extends Component {
         let filterData = imageData;
 
         if (!this.isEmptyArray(value)) {
-            console.log('filter is not empty');
-            console.log(value);
             filterData = imageData.filter((item) => {
                 return value.some(selectedItem => {
                     return selectedItem.author === item.author;
@@ -68,22 +68,68 @@ class App extends Component {
         return (value === null || value.length === 0);
     }
 
+    addToCart = (newItem) => {
+        const cartItems = this.state.cartItems
+
+        let alreadyInCart = false;
+
+        cartItems.forEach((item) => {
+            if (item.id === newItem.id) {
+                item.count++;
+                alreadyInCart = true;
+            }
+        });
+
+        if (!alreadyInCart) {
+            cartItems.push({...newItem, count: 1});
+        }
+
+        this.setState({
+            cartItems: cartItems
+        });
+    }
+
+    removeFromCart = (id) => {
+        const cartItems =  this.state.cartItems;
+
+        this.setState({
+            cartItems: cartItems.filter(item => item.id !== id)
+        })
+    }
+
+
     render() {
-        return (<div className="App">
-                <DenseAppBar/>
-                <Container maxWidth="lg" component="main">
-                    <Filter
-                        dataList={imageData}
-                        filterDataSize={this.state.size}
-                        changeAuthorFilter={this.filterAuthor}
-                        resetFilter={this.resetFilter}
-                        defaultSelected={this.state.defaultSelected}
-                        sortingValue={this.state.sort}
-                        changeSorting={this.sortImages}
-                    />
-                    <ProductContent
-                        dataList={this.state.filteredImagesData}
-                    />
+        return (
+            <div className="App">
+
+                <DenseAppBar
+                    cartItems={this.state.cartItems}
+                    removeFromCart={this.removeFromCart}
+                />
+
+                <Container container component="main">
+                    <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                            <Filter
+                                dataList={imageData}
+                                filterDataSize={this.state.size}
+                                changeAuthorFilter={this.filterAuthor}
+                                resetFilter={this.resetFilter}
+                                defaultSelected={this.state.defaultSelected}
+                                sortingValue={this.state.sort}
+                                changeSorting={this.sortImages}
+                            />
+                        </Grid>
+                        <Divider/>
+
+                        <Grid item md={12}>
+                            <ProductContent
+                                dataList={this.state.filteredImagesData}
+                                addToCart={this.addToCart}
+                            />
+                        </Grid>
+                    </Grid>
+
                 </Container>
             </div>
         );

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import {Card , Button} from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,7 +16,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = (theme) => ({
     root: {
-        maxWidth: 345,
     },
     media: {
         height: 0,
@@ -37,7 +36,7 @@ class ProductCard extends Component {
                     <CardHeader
                         avatar={
                             <Avatar aria-label="recipe" className={classes.avatar}>
-                                {this.props.id}
+                                {this.props.image.id}
                             </Avatar>
                         }
                         action={
@@ -45,17 +44,17 @@ class ProductCard extends Component {
                                 <MoreVertIcon/>
                             </IconButton>
                         }
-                        title={this.props.author}
-                        subheader={`Width:` + this.props.width + `px Height:` + this.props.height + `px`}
+                        title={this.props.image.author}
+                        subheader={`Width:` + this.props.image.width + `px Height:` + this.props.image.height + `px`}
                     />
                     <CardMedia
                         className={classes.media}
-                        image={this.props.downloadUrl}
+                        image={this.props.image.downloadUrl}
                         title="Paella dish"
                     />
                     <CardContent>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            {`Download link: ` + this.props.url}
+                            {`Download link: ` + this.props.image.url}
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
@@ -65,6 +64,9 @@ class ProductCard extends Component {
                         <IconButton aria-label="share">
                             <ShareIcon/>
                         </IconButton>
+                        <Button size="small" color="primary" onClick={() => this.props.addToCart(this.props.image)}>
+                            Add To Cart
+                        </Button>
                     </CardActions>
                 </Card>
             </div>
