@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {AppBar, Toolbar, Typography, IconButton} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingDrawer from "./ShoppingDrawer";
 
-
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
@@ -17,42 +16,30 @@ const useStyles = (theme) => ({
         flexGrow: 1,
         textAlign: 'left',
     },
-});
+}));
 
-class DenseAppBar extends Component {
+const DenseAppBar = () => {
+    const classes = useStyles();
 
-    removeFromCart = (id) => {
-        this.props.removeFromCart(id);
-    }
+    return (
+        <div className={classes.root}>
 
-
-    render() {
-        const {classes} = this.props;
-
-
-        return (
-            <div className={classes.root}>
-
-                <AppBar position="static">
-                    <Toolbar variant="dense">
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" className={classes.title}>
-                            Photos
-                        </Typography>
-                        <div>
-                            <ShoppingDrawer
-                                cartItems={this.props.cartItems}
-                                removeFromCart={this.removeFromCart}
-                            />
-                        </div>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
-    }
+            <AppBar position="static">
+                <Toolbar variant="dense">
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" color="inherit" className={classes.title}>
+                        Photos
+                    </Typography>
+                    <div>
+                        <ShoppingDrawer/>
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
 
-export default withStyles(useStyles)(DenseAppBar);
+export default DenseAppBar;
 

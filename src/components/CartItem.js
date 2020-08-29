@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {withStyles} from "@material-ui/core/styles";
+import React from 'react';
+import {useDispatch} from 'react-redux';
+import {makeStyles} from "@material-ui/core/styles";
 import {Grid, Paper, Typography, Button, IconButton} from "@material-ui/core";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import {decrementItem, incrementItem, removeItemFromCart} from "../redux/actions/actions";
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
@@ -25,77 +27,54 @@ const useStyles = (theme) => ({
         height: 38,
         width: 38,
     },
-});
+}));
 
-class CartItem extends Component {
+const CartItem = (props) => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            count: this.props.item.count
-        }
-    }
-
-    handleAdd = () => {
-        this.setState(prevState => ({
-            count: prevState.count + 1
-        }));
-    }
-    handleDeduct = () => {
-        if (this.state.count === 1) {
-            this.props.removeFromCart(this.props.item.id);
-        } else {
-            this.setState(prevState => ({
-                count: prevState.count - 1
-            }));
-        }
-    }
-    handleRemove = () => {
-        this.props.removeFromCart(this.props.item.id);
-    }
-
-    render() {
-        const {classes, theme} = this.props;
-
-        return (
-            <div>
-                <Paper variant={"outlined"}>
-                    <Grid container>
-                        <Grid item xs={8}>
-                            <Grid container className={classes.content}>
-                                <Grid item xs={12}>
-                                    <Typography component="h5" variant="h5">
-                                        {this.props.item.id}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        {this.props.item.author}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <IconButton onClick={this.handleAdd}>
-                                        <AddCircleIcon/>
-                                    </IconButton>
-                                    {this.state.count}
-                                    <IconButton onClick={this.handleDeduct}>
-                                        <RemoveCircleIcon/>
-                                    </IconButton>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Button size={"small"} variant={"outlined"} onClick={this.handleRemove}>Remove</Button>
-                                </Grid>
-
-                                </Grid>
+    return (
+        <div>
+            <Paper variant={"outlined"}>
+                <Grid container>
+                    <Grid item xs={8}>
+                        <Grid container className={classes.content}>
+                            <Grid item xs={12}>
+                                <Typography component="h5" variant="h5">
+                                    {props.item.id}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    {props.item.author}
+                                </Typography>
                             </Grid>
-                        <Grid item xs={4}>
-                            <img className={classes.cover} alt={this.props.item.author}
-                                 src={this.props.item.downloadUrl}/>
+                            <Grid item xs={8}>
+                                <IconButton onClick={() => dispatch(incrementItem(props.item))}>
+                                    <AddCircleIcon/>
+                                </IconButton>
+                                {props.item.count}
+                                <IconButton onClick={() => dispatch(decrementItem(props.item))}>
+                                    <RemoveCircleIcon/>
+                                </IconButton>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Button size={"small"} variant={"outlined"}
+                                        onClick={() => dispatch(removeItemFromCart(props.item))}>
+                                    Remove
+                                </Button>
+                            </Grid>
+
                         </Grid>
                     </Grid>
-                </Paper>
-            </div>
-        );
-    }
+                    <Grid item xs={4}>
+                        <img className={classes.cover} alt={props.item.author}
+                             src={props.item.downloadUrl}/>
+                    </Grid>
+                </Grid>
+            </Paper>
+        </div>
+    );
+
 }
 
-export default withStyles(useStyles)(CartItem);
+export default CartItem;
+
