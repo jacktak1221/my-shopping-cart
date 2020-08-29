@@ -1,46 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ProductCard from "./ProductCard";
-import {Grid, Paper} from "@material-ui/core"
-import {withStyles} from "@material-ui/core/styles";
+import {Grid} from "@material-ui/core"
+import {useSelector} from "react-redux";
 
-const useStyles = (theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        height: 140,
-        width: 100
-    },
-    control: {
-        padding: theme.spacing(2),
-    }
-});
+const ProductContent = () => {
 
+    const filterInfo = useSelector(state => state.filterInfo);
 
-class ProductContent extends Component {
-    render() {
-        const {classes} = this.props;
-
-        return (
-            <div>
-                <Grid item container spacing={2}>
-                    {
-                        this.props.dataList.map(image => {
-                            return (
-                                <Grid item sm={12} md={4}>
+    return (
+        <div>
+            <Grid item container spacing={2}>
+                {
+                    filterInfo.filteredProductList.map(product => {
+                        return (
+                                <Grid item sm={12} md={4} key={product.id}>
                                     <ProductCard
-                                        image={image}
-                                        addToCart={this.props.addToCart}
+                                        product={product}
                                     />
                                 </Grid>
-                            );
-                        })
-                    }
-                </Grid>
-            </div>
+                        );
+                    })
+                }
+            </Grid>
+        </div>
 
-        );
-    }
+    );
 }
 
-export default withStyles(useStyles)(ProductContent);
+export default ProductContent;
