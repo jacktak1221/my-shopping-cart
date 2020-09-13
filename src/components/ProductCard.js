@@ -37,7 +37,7 @@ const ProductCard = (props) => {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                            {props.product.id}
+                            {props.product._id}
                         </Avatar>
                     }
                     action={

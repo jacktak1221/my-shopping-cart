@@ -73,7 +73,7 @@ const ShoppingDrawer = () => {
                             {cart.cartItemList.map(item => {
                                 return (
                                     <CartItem
-                                        key={item.id}
+                                        key={item._id}
                                         item={item}
                                     />
                                 )

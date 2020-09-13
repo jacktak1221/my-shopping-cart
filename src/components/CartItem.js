@@ -41,7 +41,7 @@ const CartItem = (props) => {
                         <Grid container className={classes.content}>
                             <Grid item xs={12}>
                                 <Typography component="h5" variant="h5">
-                                    {props.item.id}
+                                    {props.item._id}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     {props.item.author}

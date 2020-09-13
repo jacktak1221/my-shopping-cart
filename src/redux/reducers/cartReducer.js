@@ -22,7 +22,7 @@ export const cartReducer = (state = initialState, action) => {
             let alreadyInCart = false;
 
             cartItemList.forEach((item) => {
-                if (item.id === action.payload.id) {
+                if (item._id === action.payload._id) {
                     item.count++;
                     alreadyInCart = true;
                 }
@@ -39,7 +39,7 @@ export const cartReducer = (state = initialState, action) => {
         case REMOVE_ITEM_FROM_CART:
             return {
                 ...state,
-                cartItemList: state.cartItemList.filter(item => item.id !== action.payload.id)
+                cartItemList: state.cartItemList.filter(item => item._id !== action.payload._id)
             };
 
         case INCREMENT_ITEM:
@@ -49,7 +49,7 @@ export const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItemList: cartItemList.map(item =>
-                        item.id === targetItem.id ? {...item, count: item.count + 1}: item
+                        item._id === targetItem._id ? {...item, count: item.count + 1}: item
                 )
             };
 
@@ -60,13 +60,13 @@ export const cartReducer = (state = initialState, action) => {
             if (targetItem.count === 1) {
                 return {
                     ...state,
-                    cartItemList: state.cartItemList.filter(item => item.id !== action.payload.id)
+                    cartItemList: state.cartItemList.filter(item => item._id !== action.payload._id)
                 };
             } else {
                 return {
                     ...state,
                     cartItemList: cartItemList.map(item =>
-                        item.id === targetItem.id ? {...item, count: item.count - 1}: item
+                        item._id === targetItem._id ? {...item, count: item.count - 1}: item
                     )
                 };
             }

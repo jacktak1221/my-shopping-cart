@@ -5,15 +5,15 @@ import {useSelector} from "react-redux";
 
 const ProductContent = () => {
 
-    const filterInfo = useSelector(state => state.filterInfo);
+    const productsInfo = useSelector(state => state.productsInfo);
 
     return (
         <div>
             <Grid item container spacing={2}>
-                {
-                    filterInfo.filteredProductList.map(product => {
+                {productsInfo.filteredProductList != null &&
+                    productsInfo.filteredProductList.map(product => {
                         return (
-                                <Grid item sm={12} md={4} key={product.id}>
+                                <Grid item sm={12} md={4} key={product._id}>
                                     <ProductCard
                                         product={product}
                                     />
