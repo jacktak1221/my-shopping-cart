@@ -8,9 +8,10 @@ import {changeSortingSeq, filterItemByNames, resetFilter} from "../redux/actions
 
 const FilterPanel = () => {
 
-    const filterInfo = useSelector(state => state.filterInfo);
+    const productsInfo = useSelector(state => state.productsInfo);
     const dispatch = useDispatch();
-    const productList = filterInfo.filteredProductList;
+    const productList = productsInfo.filteredProductList;
+    const fullProductList = productsInfo.fullProductList;
 
 
     return (
@@ -25,7 +26,8 @@ const FilterPanel = () => {
                         multiple
                         id="free-solo-2-demo"
                         disableClearable
-                        options={productList}
+                        options={fullProductList}
+                        filterSelectedOptions
                         getOptionLabel={(data) => data.author}
                         renderInput={(params) => (
                             <TextField
@@ -45,7 +47,7 @@ const FilterPanel = () => {
                     <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        value={filterInfo.sortingDirection}
+                        value={productsInfo.sortingDirection}
                         onChange={(event) => dispatch(changeSortingSeq(event))}
                         label="Sorting"
                     >
@@ -56,7 +58,7 @@ const FilterPanel = () => {
 
                 <Grid item xs={6} md={2}>
                     <Typography>
-                        Filter Result: {productList.length}
+                        Filter Result: {productsInfo.filteredProductList != null && productList.filteredProductList != null? productList.filteredProductList.length : 0}
                     </Typography>
                 </Grid>
 

@@ -1,16 +1,23 @@
-import {CHANGE_SORTING_SEQ, FILTER_ITEM_BY_NAMES, RESET_FILTER} from "../actions/actionType";
-import productList from "../../data/imageData";
+import {CHANGE_SORTING_SEQ, FETCH_PRODUCT_LIST, FILTER_ITEM_BY_NAMES, RESET_FILTER} from "../actions/actionType";
+
 import {isEmptyArray} from "../../utilities";
 
 const initialState = {
-    filteredProductList: productList,
+    fullProductList: [],
+    filteredProductList: [],
     sortingDirection: 'asc'
-
 }
 
-export const filterReducer = (state = initialState, action) => {
+export const productReducer = (state = initialState, action) => {
 
     switch (action.type) {
+
+        case FETCH_PRODUCT_LIST:
+            return {
+                ...state,
+                filteredProductList: action.payload,
+                fullProductList: action.payload
+            }
 
         case FILTER_ITEM_BY_NAMES:
 
@@ -49,7 +56,11 @@ export const filterReducer = (state = initialState, action) => {
             };
 
         case RESET_FILTER:
-            return initialState;
+            return {
+                ...state,
+                filteredProductList: state.fullProductList,
+                sortingDirection: 'asc'
+            };
 
         default:
             return state;

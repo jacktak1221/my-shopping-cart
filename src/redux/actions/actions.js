@@ -1,12 +1,22 @@
 import {
     ADD_ITEM_TO_CART, CHANGE_SORTING_SEQ,
     DECREMENT_ITEM,
-    FETCH_PRODUCTS,
+    FETCH_PRODUCT_LIST,
     FILTER_ITEM_BY_NAMES,
     INCREMENT_ITEM,
     REMOVE_ITEM_FROM_CART, RESET_FILTER
 } from "./actionType";
 
+export const fetchProductList = () => async (dispatch) => {
+    const res = await fetch('/api/products');
+
+    const resData = await res.json();
+
+    dispatch({
+        type: FETCH_PRODUCT_LIST,
+        payload: resData
+    })
+}
 
 export const addItemToCart = (item) => {
     return ({
